@@ -36,6 +36,7 @@ func main() {
 	coordinatesHead = coordinatesHead[:len(coordinatesHead)-1]
 	log.Println(len(removeDuplicates(coordinatesTail)))
 	log.Println(part2())
+	log.Println(part3())
 }
 
 func calculateCoordinates(coordinatesHead, coordinatesTail *[]Coordinate, lastCoordinates *Coordinate, direction string, count int, lastDirection *string) {

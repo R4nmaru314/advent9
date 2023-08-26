@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"math"
 	"os"
 	"strconv"
@@ -18,7 +17,7 @@ var dd = map[string][2]int{
 	"D": {0, -1},
 }
 
-func main() {
+func part3() int {
 	file, _ := os.Open("input.txt")
 	scanner := bufio.NewScanner(file)
 	tailVisited := make(map[[2]int]struct{})
@@ -36,7 +35,7 @@ func main() {
 			tailVisited[[2]int{knots[9][0], knots[9][1]}] = struct{}{}
 		}
 	}
-	fmt.Println(len(tailVisited))
+	return len(tailVisited)
 }
 
 func touching(x1, y1, x2, y2 int) bool {
