@@ -20,7 +20,6 @@ func main() {
 	file, _ := os.Open(file)
 	scanner := bufio.NewScanner(file)
 	coordinatesHead := []Coordinate{{x: 0, y: 0}}
-	coordinatesTail := []Coordinate{{x: 0, y: 0}}
 	coordinatesTails := make([][]Coordinate, 9)
 	for i := 0; i < 9; i++ {
 		coordinatesTails[i] = []Coordinate{{x: 0, y: 0}}
@@ -33,64 +32,60 @@ func main() {
 		values := strings.Split(line, " ")
 		direction := values[0]
 		count, _ := strconv.Atoi(values[1])
-		calculateCoordinates(&coordinatesHead, &coordinatesTail, coordinatesTails, &lastCoordinate, direction, count, &lastDirection)
+		calculateCoordinates(&coordinatesHead, coordinatesTails, &lastCoordinate, direction, count, &lastDirection)
 	}
 	lastHeadCoordinate := (coordinatesHead)[len(coordinatesHead)-1]
-	calculateCoordinates(&coordinatesHead, &coordinatesTail, coordinatesTails, &lastHeadCoordinate, lastDirection, 1, &lastDirection)
+	calculateCoordinates(&coordinatesHead, coordinatesTails, &lastHeadCoordinate, lastDirection, 1, &lastDirection)
 	coordinatesHead = coordinatesHead[:len(coordinatesHead)-1]
-	log.Println(len(removeDuplicates(coordinatesTail)))
+	log.Println(len(removeDuplicates(coordinatesTails[0])))
 	log.Println(len(removeDuplicates(coordinatesTails[8])))
 }
 
-func calculateCoordinates(coordinatesHead, coordinatesTail *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinates *Coordinate, direction string, count int, lastDirection *string) {
+func calculateCoordinates(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinates *Coordinate, direction string, count int, lastDirection *string) {
 
 	if direction == "R" {
-		calculateCoordinatesRight(coordinatesHead, coordinatesTail, coordinatesTails, lastCoordinates, count)
+		calculateCoordinatesRight(coordinatesHead, coordinatesTails, lastCoordinates, count)
 	} else if direction == "L" {
-		calculateCoordinatesLeft(coordinatesHead, coordinatesTail, coordinatesTails, lastCoordinates, count)
+		calculateCoordinatesLeft(coordinatesHead, coordinatesTails, lastCoordinates, count)
 	} else if direction == "U" {
-		calculateCoordinatesUp(coordinatesHead, coordinatesTail, coordinatesTails, lastCoordinates, count)
+		calculateCoordinatesUp(coordinatesHead, coordinatesTails, lastCoordinates, count)
 	} else if direction == "D" {
-		calculateCoordinatesDown(coordinatesHead, coordinatesTail, coordinatesTails, lastCoordinates, count)
+		calculateCoordinatesDown(coordinatesHead, coordinatesTails, lastCoordinates, count)
 	}
 	*lastDirection = direction
 }
 
-func calculateCoordinatesRight(coordinatesHead, coordinatesTail *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
+func calculateCoordinatesRight(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
 	for i := 0; i < count; i++ {
 		newCoordinate := Coordinate{lastCoordinate.x + 1, lastCoordinate.y}
 		*coordinatesHead = append(*coordinatesHead, newCoordinate)
-		calculateTail(coordinatesTail, lastCoordinate)
 		calculateTails(coordinatesTails, lastCoordinate)
 		*lastCoordinate = newCoordinate
 	}
 }
 
-func calculateCoordinatesLeft(coordinatesHead, coordinatesTail *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
+func calculateCoordinatesLeft(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
 	for i := 0; i < count; i++ {
 		newCoordinate := Coordinate{lastCoordinate.x - 1, lastCoordinate.y}
 		*coordinatesHead = append(*coordinatesHead, newCoordinate)
-		calculateTail(coordinatesTail, lastCoordinate)
 		calculateTails(coordinatesTails, lastCoordinate)
 		*lastCoordinate = newCoordinate
 	}
 }
 
-func calculateCoordinatesUp(coordinatesHead, coordinatesTail *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
+func calculateCoordinatesUp(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
 	for i := 0; i < count; i++ {
 		newCoordinate := Coordinate{lastCoordinate.x, lastCoordinate.y + 1}
 		*coordinatesHead = append(*coordinatesHead, newCoordinate)
-		calculateTail(coordinatesTail, lastCoordinate)
 		calculateTails(coordinatesTails, lastCoordinate)
 		*lastCoordinate = newCoordinate
 	}
 }
 
-func calculateCoordinatesDown(coordinatesHead, coordinatesTail *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
+func calculateCoordinatesDown(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
 	for i := 0; i < count; i++ {
 		newCoordinate := Coordinate{lastCoordinate.x, lastCoordinate.y - 1}
 		*coordinatesHead = append(*coordinatesHead, newCoordinate)
-		calculateTail(coordinatesTail, lastCoordinate)
 		calculateTails(coordinatesTails, lastCoordinate)
 		*lastCoordinate = newCoordinate
 	}
