@@ -92,9 +92,7 @@ func calculateCoordinatesDown(coordinatesHead *[]Coordinate, coordinatesTails []
 }
 
 func calculateTails(coordinatesTails [][]Coordinate, lastCoordinate *Coordinate) {
-	calculateTail(&coordinatesTails[0], lastCoordinate)
-	*lastCoordinate = (coordinatesTails[0])[len(coordinatesTails[0])-1]
-	for i := 1; i < 9; i++ {
+	for i := 0; i < 9; i++ {
 		calculateTail(&coordinatesTails[i], lastCoordinate)
 		*lastCoordinate = (coordinatesTails[i])[len(coordinatesTails[i])-1]
 	}
