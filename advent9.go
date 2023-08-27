@@ -102,34 +102,26 @@ func calculateTails(coordinatesTails [][]Coordinate, lastCoordinate *Coordinate)
 
 func calculateTail(coordinatesTail *[]Coordinate, lastCoordinate *Coordinate) {
 	lastTailCoordinate := (*coordinatesTail)[len(*coordinatesTail)-1]
+	var deltaX, deltaY int
+
+	if lastTailCoordinate.y < lastCoordinate.y {
+		deltaY = 1
+	} else {
+		deltaY = -1
+	}
+
+	if lastTailCoordinate.x < lastCoordinate.x {
+		deltaX = 1
+	} else {
+		deltaX = -1
+	}
 
 	if isTwoUnitsAwayY(*lastCoordinate, lastTailCoordinate) && isTwoUnitsAwayX(*lastCoordinate, lastTailCoordinate) {
-		if lastTailCoordinate.y < lastCoordinate.y {
-			if lastTailCoordinate.x < lastCoordinate.x {
-				*coordinatesTail = append(*coordinatesTail, Coordinate{lastTailCoordinate.x + 1, lastTailCoordinate.y + 1})
-
-			} else {
-				*coordinatesTail = append(*coordinatesTail, Coordinate{lastTailCoordinate.x - 1, lastTailCoordinate.y + 1})
-			}
-		} else {
-			if lastTailCoordinate.x < lastCoordinate.x {
-				*coordinatesTail = append(*coordinatesTail, Coordinate{lastTailCoordinate.x + 1, lastTailCoordinate.y - 1})
-			} else {
-				*coordinatesTail = append(*coordinatesTail, Coordinate{lastTailCoordinate.x - 1, lastTailCoordinate.y - 1})
-			}
-		}
+		*coordinatesTail = append(*coordinatesTail, Coordinate{lastTailCoordinate.x + deltaX, lastTailCoordinate.y + deltaY})
 	} else if isTwoUnitsAwayX(*lastCoordinate, lastTailCoordinate) {
-		if lastTailCoordinate.x < lastCoordinate.x {
-			*coordinatesTail = append(*coordinatesTail, Coordinate{lastTailCoordinate.x + 1, lastCoordinate.y})
-		} else {
-			*coordinatesTail = append(*coordinatesTail, Coordinate{lastTailCoordinate.x - 1, lastCoordinate.y})
-		}
+		*coordinatesTail = append(*coordinatesTail, Coordinate{lastTailCoordinate.x + deltaX, lastCoordinate.y})
 	} else if isTwoUnitsAwayY(*lastCoordinate, lastTailCoordinate) {
-		if lastTailCoordinate.y < lastCoordinate.y {
-			*coordinatesTail = append(*coordinatesTail, Coordinate{lastCoordinate.x, lastTailCoordinate.y + 1})
-		} else {
-			*coordinatesTail = append(*coordinatesTail, Coordinate{lastCoordinate.x, lastTailCoordinate.y - 1})
-		}
+		*coordinatesTail = append(*coordinatesTail, Coordinate{lastCoordinate.x, lastTailCoordinate.y + deltaY})
 	}
 }
 
