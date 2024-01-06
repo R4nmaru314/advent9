@@ -41,6 +41,7 @@ func main() {
 	log.Println(len(removeDuplicates(coordinatesTails[8])))
 }
 
+// calculateCoordinates updates the head and tail coordinates based on the direction and count of movement.
 func calculateCoordinates(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinates *Coordinate, direction string, count int, lastDirection *string) {
 
 	if direction == "R" {
@@ -55,6 +56,7 @@ func calculateCoordinates(coordinatesHead *[]Coordinate, coordinatesTails [][]Co
 	*lastDirection = direction
 }
 
+// calculateCoordinatesRight appends new coordinates to the right of the last coordinate.
 func calculateCoordinatesRight(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
 	for i := 0; i < count; i++ {
 		newCoordinate := Coordinate{lastCoordinate.x + 1, lastCoordinate.y}
@@ -64,6 +66,7 @@ func calculateCoordinatesRight(coordinatesHead *[]Coordinate, coordinatesTails [
 	}
 }
 
+// calculateCoordinatesLeft appends new coordinates to the left of the last coordinate.
 func calculateCoordinatesLeft(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
 	for i := 0; i < count; i++ {
 		newCoordinate := Coordinate{lastCoordinate.x - 1, lastCoordinate.y}
@@ -73,6 +76,7 @@ func calculateCoordinatesLeft(coordinatesHead *[]Coordinate, coordinatesTails []
 	}
 }
 
+// calculateCoordinatesUp appends new coordinates above the last coordinate.
 func calculateCoordinatesUp(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
 	for i := 0; i < count; i++ {
 		newCoordinate := Coordinate{lastCoordinate.x, lastCoordinate.y + 1}
@@ -82,6 +86,7 @@ func calculateCoordinatesUp(coordinatesHead *[]Coordinate, coordinatesTails [][]
 	}
 }
 
+// calculateCoordinatesDown appends new coordinates below the last coordinate.
 func calculateCoordinatesDown(coordinatesHead *[]Coordinate, coordinatesTails [][]Coordinate, lastCoordinate *Coordinate, count int) {
 	for i := 0; i < count; i++ {
 		newCoordinate := Coordinate{lastCoordinate.x, lastCoordinate.y - 1}
@@ -91,6 +96,7 @@ func calculateCoordinatesDown(coordinatesHead *[]Coordinate, coordinatesTails []
 	}
 }
 
+// calculateTails updates the tail coordinates for each of the 9 tails.
 func calculateTails(coordinatesTails [][]Coordinate, lastCoordinate *Coordinate) {
 	for i := 0; i < 9; i++ {
 		calculateTail(&coordinatesTails[i], lastCoordinate)
@@ -98,6 +104,7 @@ func calculateTails(coordinatesTails [][]Coordinate, lastCoordinate *Coordinate)
 	}
 }
 
+// calculateTail calculates the next point in a tail path.
 func calculateTail(coordinatesTail *[]Coordinate, lastCoordinate *Coordinate) {
 	lastTailCoordinate := (*coordinatesTail)[len(*coordinatesTail)-1]
 	var deltaX, deltaY int
@@ -123,16 +130,19 @@ func calculateTail(coordinatesTail *[]Coordinate, lastCoordinate *Coordinate) {
 	}
 }
 
+// isTwoUnitsAwayX checks if two coordinates are two units apart horizontally.
 func isTwoUnitsAwayX(coordinate1, coordinate2 Coordinate) bool {
 	dx := int(math.Abs(float64(coordinate1.x - coordinate2.x)))
 	return dx == 2
 }
 
+// isTwoUnitsAwayY checks if two coordinates are two units apart vertically.
 func isTwoUnitsAwayY(coordinate1, coordinate2 Coordinate) bool {
 	dy := int(math.Abs(float64(coordinate1.y - coordinate2.y)))
 	return dy == 2
 }
 
+// removeDuplicates removes duplicate coordinates from a slice.
 func removeDuplicates(coordinates []Coordinate) []Coordinate {
 	uniqueMap := make(map[Coordinate]bool)
 	var uniqueCoordinates []Coordinate
